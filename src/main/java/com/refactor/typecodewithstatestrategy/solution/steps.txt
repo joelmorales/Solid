@@ -1,0 +1,98 @@
+Use this when the implementation can change on live
+
+1. Encapsulate the type code  and texted
+ 	switch(getType())
+ 	
+2. Declare the state class. abstract class  with an abstract method
+	public abstract class EmployeeType {
+	
+		abstract int getTypeCode();
+		
+	}
+
+3. Create the subclasses
+public class Engineer extends EmployeeType {
+	@Override
+	int getTypeCode() {		
+		return Employee.ENGINEER;
+	}
+}
+
+4. hook the subclasses into the employees by modify the accessors for the type code
+ replace type with the EmployeeType class
+ private EmployeeType type;
+ 
+ public int getType() {
+		return type.getTypeCode();
+	}
+	
+	void setType(int arg) throws IllegalAccessException{
+		switch (getType()) {
+		case ENGINEER:
+			type = new Engineer();
+			break;
+		case SALESMAN:
+			type= new Salesman();
+			break;
+		case MANAGER:
+			type = new Manager();
+			break;
+		default:
+			throw new IllegalAccessException("Incorrect Employee");
+		}
+	}
+	
+5. tested this change
+this is change  --- Employee employee = new Employee(new Engineer()); 
+
+6. moving all type code and subsclasses to a new class
+6a. First type code definitions into the employee type and adjust the setType on employee
+ we going to create a factory Employee Type
+ 
+public abstract class EmployeeType {
+
+	static final int ENGINEER = 0;
+	static final int SALESMAN = 1;
+	static final int MANAGER = 2;
+	
+	static EmployeeType newType(int code) throws IllegalAccessException {
+		switch (code) {
+		case ENGINEER:
+			return new Engineer();			
+		case SALESMAN:
+			return new Salesman();			
+		case MANAGER:
+			return new Manager();			
+		default:
+			throw new IllegalAccessException("Incorrect Employee");
+		}
+	}
+	
+	abstract int getTypeCode();	
+}
+
+7. Then remove the type code definitions from Employee
+public int payAmount() {
+		switch (getType()) {
+		case EmployeeType.ENGINEER:
+			return monthlysalary;
+		case EmployeeType.SALESMAN:
+			return monthlysalary + comission;
+		case EmployeeType.MANAGER:
+			return monthlysalary + bonus;
+		default:
+			throw new RuntimeException("Incorrect Employee");
+		}
+	}
+	
+
+8. Use repalce conditional with polymorphim on payamount
+
+
+
+
+
+
+
+
+		

@@ -1,0 +1,1 @@
+For every behavior we need to add another case , if or switch

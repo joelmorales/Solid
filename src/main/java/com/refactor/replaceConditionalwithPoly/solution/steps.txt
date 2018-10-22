@@ -1,0 +1,42 @@
+1. Move the payAmount into the EmployeeType
+ on class Employee
+   int payAmount(){
+		return type.payAmount(this);
+	}
+	
+on class EmployeeType
+ public int payAmount(Employee emp) {
+		switch (getTypeCode()) {
+		case EmployeeType.ENGINEER:
+			return emp.getMonthlysalary();
+		case EmployeeType.SALESMAN:
+			return emp.getMonthlysalary() + emp.getComission();
+		case EmployeeType.MANAGER:
+			return emp.getMonthlysalary() +  emp.getBonus();
+		default:
+			throw new RuntimeException("Incorrect Employee");
+		}
+	}
+	
+
+2. Work now on the cases statements / copy the leg of engineering on class
+public class Engineer extends EmployeeType {
+	
+	public int payAmount(Employee emp){
+		return emp.getMonthlysalary();
+	}
+	
+	@Override
+	int getTypeCode() {		
+		return EmployeeType.ENGINEER;
+	}
+}
+
+3. Continue with all of them
+
+4. declare a suplerclass method abstract
+abstract int payAmount(Employee emp);
+
+5. delete the old method and tested
+
+

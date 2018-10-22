@@ -1,0 +1,101 @@
+1. Because the constructor use a type code to create the employee , i need to change with
+a factory method. (This is on the class )
+
+	public static Employee create(int type){
+		return new Employee(type);
+	}
+	
+	private Employee(int type){
+		this.type = type;
+	}
+
+2. Tested
+public static void main(String[] args) {
+		Employee employee = Employee.create(Employee.MANAGER);
+
+	}
+	
+
+3. Start with one class as a sublcass
+public class Engineer extends Employee{
+	
+	public int getType(){
+		return Employee.ENGINEER;
+	}		
+}
+
+4. alter the create method to include the change
+	public static Employee create(int type){
+		if(type == ENGINEER) return new Engineer();
+		return new Employee(type);
+	}
+
+5. tested . should be the same result
+
+6. Create all the classes
+
+7. change the method create
+ public static Employee create(int type){
+		if(type == ENGINEER) return new Engineer();
+		else if (type== SALESMAN) return  new Salesman();
+		else if (type==MANAGER) return new Manager();
+		return new Employee(type);
+	}
+	
+	
+8. Convert the getType in abstract method and I delete the type field for the class
+public abstract class Employee {
+
+	static final int ENGINEER = 0;
+	static final int SALESMAN = 1;
+	static final int MANAGER = 2;
+	
+	//private int type;
+	
+	public Employee(){		
+	}
+	
+	public static Employee create(int type){	
+		switch(type){
+		case ENGINEER:
+			return new Engineer();
+		case SALESMAN:
+			return  new Salesman();
+		case MANAGER:
+			return new Manager();
+		default:
+			throw new IllegalArgumentException();
+		}
+		
+		/*if(type == ENGINEER) return new Engineer();
+		else if (type== SALESMAN) return  new Salesman();
+		else return new Manager();	*/	
+	}
+	
+	/*protected Employee(int type){
+		this.type = type;
+	}*/
+	
+	/*public int getType(){
+		return type;
+	}*/
+
+	abstract int getType();
+
+	@Override
+	public String toString() {
+		return "Employee [getType()=" + getType() + "]";
+	}
+	
+	/*@Override
+	public String toString() {
+		return "Employee [type=" + type + "]";
+	}*/	
+	
+}
+
+
+
+
+
+

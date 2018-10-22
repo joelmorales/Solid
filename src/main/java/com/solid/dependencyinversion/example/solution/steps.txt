@@ -1,0 +1,4 @@
+Create an interface for LightBulb class  ( Switchable )
+Create a Fan device or another
+Extract an interface for the ElectricPowerSwitch (Switch )
+

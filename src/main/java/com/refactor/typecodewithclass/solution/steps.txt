@@ -1,0 +1,68 @@
+1. Create a new class with the instant of the type code ( BloodGroup)
+public class BloodGroup {
+
+	public static final BloodGroup O = new BloodGroup(0);
+	public static final BloodGroup A = new BloodGroup(1);
+	public static final BloodGroup B = new BloodGroup(2);	
+	public static final BloodGroup AB = new BloodGroup(3);
+	//public static final BloodGroup[] values = { O, A, B, AB };
+
+	private final int code;
+
+	private BloodGroup(int code) {
+		this.code = code;
+	}
+
+	public int getCode() {
+		return code;
+	}
+
+	<!-- public static BloodGroup code(int arg) {
+		return values[arg];
+	} -->
+
+}
+
+2. replace the code in the class with the code that use the new class
+public class RefactorPerson {
+
+	public static final int O = BloodGroup.O.getCode();
+	public static final int A = BloodGroup.A.getCode();
+	public static final int B = BloodGroup.B.getCode();
+	public static final int BC = BloodGroup.AB.getCode();
+
+	private BloodGroup bloodGroup;
+
+	public RefactorPerson(BloodGroup bloodGroup) {
+		this.bloodGroup = bloodGroup;
+	}
+
+	public BloodGroup getBloodGroup() {
+		return bloodGroup;
+	}
+
+	public void setBloodGroup(BloodGroup bloodGroup) {
+		this.bloodGroup = bloodGroup;
+	}
+
+	@Override
+	public String toString() {
+		return "Person [bloodGroup=" + bloodGroup + "]";
+	}	
+	
+}
+
+3. tested
+public static void main(String[] args) {
+		
+		Person person = new Person(1);
+		System.out.println("Person:"+person.toString());
+		
+		RefactorPerson rPerson = new RefactorPerson(BloodGroup.AB);
+		System.out.println("Refactor Person:"+rPerson.toString());
+	}
+}
+
+4. remove the typeCode of the class
+
+

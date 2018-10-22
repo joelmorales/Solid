@@ -1,0 +1,65 @@
+1. extract an interface for report. So we want extract a class per behavior 
+	( I going to change the Report class name )
+2. build a class per report and Use the interface
+3. replace on the witch the new clases and tested
+	
+	public String generate(Type type) {
+		switch (type) {
+		case ORDERS_PER_DAY:
+			return new OrderPerDayReport().generate();
+		case CONVERSION_RATES:
+			return new ConversionRatesReport().generate();
+		default:
+			return "Default report";
+		}
+	}
+	
+	public static void main(String[] args) {
+		
+		Report report = new Report();		
+		
+		System.out.println(report.generate(Type.CONVERSION_RATES));
+		
+		System.out.println(report.generate(Type.ORDERS_PER_DAY));
+	}
+	
+4. Replace the type per the interface and replace the swicth
+5. Replace the runner
+
+  public static void main(String[] args) {
+		
+		BuildReport report = new BuildReport();		
+		
+		System.out.println(report.generate(new ConversionRatesReport()));
+		
+		System.out.println(report.generate(new OrderPerDayReport()));
+	}
+
+6. Add the report interface to the Constructor
+
+public class BuildReport {
+
+	private Report report;
+	
+	BuildReport ( Report report){
+		this.report = report;
+	}
+	
+	public String generate() {
+		return report.generate();
+	}
+
+}
+
+	public static void main(String[] args) {
+		
+		BuildReport report = new BuildReport(new ConversionRatesReport());		
+		
+		System.out.println(report.generate());	
+		report = new BuildReport(new OrderPerDayReport());	
+		System.out.println(report.generate());
+		
+	}
+	
+7. tested
+	

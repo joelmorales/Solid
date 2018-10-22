@@ -1,0 +1,94 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+sourceCompatibility = 1.7
+version = '1.0'
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Quickstart',
+                   'Implementation-Version': version
+    }
+}
+
+repositories {
+	mavenLocal()
+    mavenCentral()    
+}
+
+ext{
+	springVersion = '4.1.4.RELEASE'
+	log4jVersion = '1.2.17'
+	slf4jVersion = '1.7.10'
+	springDataJpaVersion = '1.9.4.RELEASE'
+	hibernateCoreVersion = '5.1.0.Final'
+	hibernateEntitymanagerVersion = '5.1.0.Final'
+	springJmsVersion = '3.0.4.RELEASE'
+	springIntegrationVersion = '4.1.2.RELEASE'
+	h2databaseVersion = '1.4.191'
+	oracleJdbcVersion = '11.2.0.3'
+	c3p0Version = '0.9.5.1'
+}
+
+dependencies {
+
+	compile fileTree(dir: 'lib', include: '*.jar')
+	  
+   	//Spring
+   	compile "org.springframework:spring-context:${springVersion}"
+   	compile "org.springframework:spring-context-support:${springVersion}"
+   	//compile "org.springframework:spring-test:${springVersion}"
+   	runtime "org.springframework:spring-web:${springVersion}"
+
+   	//log4j
+   	compile "log4j:log4j:${log4jVersion}"
+   	runtime "org.slf4j:slf4j-log4j12:${slf4jVersion}"
+   
+   	//Java Persistence and Hibernate
+   	compile "org.springframework.data:spring-data-jpa:${springDataJpaVersion}"
+   	compile "org.hibernate:hibernate-core:${hibernateCoreVersion}"
+   	compile "org.hibernate:hibernate-entitymanager:${hibernateEntitymanagerVersion}"      
+   	compile "org.springframework:spring-jms:${springJmsVersion}"
+    
+   	//Spring Integration - Orchastration of many integration endpoints with EIP
+   	compile "org.springframework.integration:spring-integration-core:${springIntegrationVersion}"
+   	compile "org.springframework.integration:spring-integration-jms:${springIntegrationVersion}"
+   	compile "org.springframework.integration:spring-integration-xml:${springIntegrationVersion}"
+   	compile ("org.springframework.integration:spring-integration-jpa:${springIntegrationVersion}"){
+   			exclude module: "javax.persistence"
+   		}
+   
+   	//Jdbc Drivers
+   	compile "com.h2database:h2:${h2databaseVersion}"
+   	compile "com.oracle:ojdbc6:${oracleJdbcVersion}"
+  	   
+   	//Connection pool datasource capability
+   	compile "com.mchange:c3p0:${c3p0Version}"
+      
+    compile(group: 'org.apache.activemq', name: 'activemq-core', version:'5.7.0') {
+      	exclude(module: 'activemq-protobuf')
+   	}
+	
+    //compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
+   	testCompile group: 'junit', name: 'junit', version:'4.11'
+   	testCompile "com.github.tomakehurst:wiremock:2.6.0"     
+   	testCompile group: 'org.mockito', name: 'mockito-core', version: '2.2.19'
+   
+	
+	testCompile group: 'org.springframework', name: 'spring-test', version: '4.0.5.RELEASE'
+	//compile group: 'org.springframework', name: 'spring-test', version: '4.0.5.RELEASE'
+	
+	//compile  'org.springframework.boot:spring-boot-starter-test:1.1.5.RELEASE' 
+	
+}
+
+test {
+    systemProperties 'property': 'value'
+}
+
+uploadArchives {
+    repositories {
+       flatDir {
+           dirs 'repos'
+       }
+    }
+}
